@@ -1,0 +1,18 @@
+h1 {
+  text-align: center;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.panel-info {
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* Customization */

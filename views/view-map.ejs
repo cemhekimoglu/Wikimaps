@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= map.title %></title>
+
+    <!-- BOOTSTRAP CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- CSS import -->
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/view-map.css" type="text/css" />
+
+    <!-- LAYOUT CSS -->
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <!-- NAVBAR CSS -->
+    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+    <!-- MAPLIST CSS -->
+    <link rel="stylesheet" href="/styles/maplist.css" type="text/css" />
+    <!-- PROFILE CSS -->
+    <link rel="stylesheet" href="/styles/profile.css" type="text/css" />
+    <!-- NAVBAR CSS -->
+    <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" integrity="sha384-p2jx59pefphTFIpeqCcISO9MdVfIm4pNnsL08A6v5vaQc4owkQqxMV8kg4Yvhaw/" crossorigin="anonymous">
+
+    <!-- JQ import -->
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+
+    <!-- BOOTSRAP JS CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYFKtQIeixhpaOG8c72kkrb9ZN9L-ccIc&callback=initMap"
+    async defer></script>
+
+    <script>
+      // creating variables which are accessable by imported js files
+      const map = <%- JSON.stringify(map) %>;
+      const poi_list = <%- JSON.stringify(poi_list) %>;
+    </script>
+
+    <!-- JS import -->
+    <!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
+    <script type="text/javascript" src="/scripts/view-map.js"></script>
+    <script type="text/javascript" src="/scripts/view-map-list.js"></script>
+  </head>
+
+  <body>
+    <% include partials/_navbar.ejs %>
+    <!-- Add nav bar but need to pass username into map_info -->
+
+    <div id="map-list-container">
+
+      <div id="map"></div>
+
+      <div id="poi-list">
+
+        <header id="poi-header">
+          <div id="map-title"> <%= map.title %></div>
+          <form id="like-form">
+            <% if (username) {%>
+            <button id="like-button">
+              <!-- <i class="fas fa-heart fa-2x unliked" id="like-icon"></i> -->
+              <i class="far fa-heart fa-2x unliked" id="like-icon"></i>
+              <!-- When liked changed to icon below -->
+              <!-- <i class="fas fa-heart"></i>  -->
+            </button>
+            <% } %>
+          </form>
+        </header>
+
+        <% if (username) {%>
+          <form method='GET' action='/maps/<%=map.id%>/addpoi'>
+            <input class="btn btn-primary" id="add-poi-btn" type='submit' value='Add POI' />
+          </form>
+        <% } %>
+
+        <div class="list-group">
+          <% for (var i = 0; i < poi_list.length; i++) { %>
+            <div class="list-group-item poi-container" data-toggle="list">
+              <div class="poi-title" data-marker="<%= i %>"> <%= poi_list[i].title %> </div>
+              <div class="poi-body">
+
+
+                <img class="img-responsive poi-img" src="<%= poi_list[i].image %>" alt="Card image cap">
+                <p class="poi-address"><b>Address:</b> <%= poi_list[i].address %> </p>
+                <p class="poi-desc"><b>Description:</b> <%= poi_list[i].description %> </p>
+                <p class="poi-user"><b>Created by:</b> <%= poi_list[i].created_by_username %> </p>
+                <div class="poi-buttons">
+                  <a href="https://www.google.com/maps/place/?q=place_id:<%= poi_list[i].place_id %>" target="_blank">
+                    <button class="btn btn-success poi-button" data-placeid="">Open</button>
+                  </a>
+                  <form method='GET' action="/poi/<%=poi_list[i].id%>/edit">
+                    <button class="btn btn-primary poi-button">Edit</button>
+                  </form>
+                  <form method="POST" action='/poi/<%=poi_list[i].id%>/delete'>
+                    <button class="btn btn-danger poi-button">Delete</button>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          <% } %>
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+  </body>
+</html>

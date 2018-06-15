@@ -1,0 +1,104 @@
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+  height: 100%;
+  width: 100%;
+  grid-area: map;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin-left: 5px;
+  padding: 0;
+}
+
+#map-list-container {
+  display: grid;
+  grid-area: list;
+  height: 100%;
+  grid-template-areas: "map list";
+  grid-template-columns: auto 30%;
+}
+
+#poi-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+#map-title {
+  font-size: 25px;
+  font-weight: bolder;
+  margin-left: 5px;
+}
+
+#like-form {
+  align-self: center;
+}
+
+#like-button {
+  background-color: transparent;
+  border: none;
+}
+
+.unliked {
+  color: black;
+}
+
+.liked {
+  color: red;
+}
+
+#add-poi-btn {
+  width: 100%;
+  margin: 10px 0;
+}
+
+#poi-list {
+  padding: 10px;
+  /*resize: horizontal;*/
+}
+
+.poi-title {
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  margin: 5px 0;
+  /*padding: 5px;*/
+}
+
+.poi-body {
+  display: none;
+  /*padding: 5px;*/
+}
+
+.poi-address {
+  margin: 5px 0;
+}
+
+.poi-address {
+  margin-top: 5px;
+}
+
+.poi-buttons {
+  display: inline-grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 10px;
+}
+
+.poi-button {
+  justify-self: stretch;
+  width: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  #map-list-container {
+    grid-template-areas: "map" "list";
+    grid-template-columns: 100%;
+  }
+  #map {
+    height: 100vh;
+  }
+}
